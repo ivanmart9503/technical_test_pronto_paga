@@ -18,7 +18,7 @@ class Appointment extends Model
     ];
 
     protected $casts = [
-        'date_time' => 'datetime',
+        'date_time' => 'datetime:Y-m-d H:i',
     ];
 
     public function patient(): BelongsTo

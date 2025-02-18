@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function appointments(): HasMany
     {
-        if($this->role === RoleEnum::Patient->__toString()){
+        if($this->role === RoleEnum::Patient->value()){
             return $this->hasMany(Appointment::class, 'patient_id');
         }
 

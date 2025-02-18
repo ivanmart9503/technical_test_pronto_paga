@@ -19,8 +19,6 @@ class UserFactory extends Factory
 
     public function doctor(int $index): static
     {
-        $index = $index + 1;
-
         return $this->state(fn(array $attributes) => [
             'email' => "doctor{$index}@test.com",
             'role' => 'doctor',
@@ -29,8 +27,6 @@ class UserFactory extends Factory
 
     public function patient(int $index): static
     {
-        $index = $index + 1;
-
         return $this->state(fn(array $attributes) => [
             'email' => "patient{$index}@test.com",
             'role' => 'patient',
