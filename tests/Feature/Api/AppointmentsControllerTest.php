@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Models\User;
 use App\Models\Appointment;
+use App\Models\Payment;
 use App\Services\AppointmentsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Gate;
@@ -20,7 +21,6 @@ class AppointmentsControllerTest extends TestCase
     {
         parent::setUp();
 
-        // Crear un mock de AppointmentsService
         $this->appointmentsService = Mockery::mock(AppointmentsService::class);
         $this->app->instance(AppointmentsService::class, $this->appointmentsService);
     }
@@ -46,10 +46,8 @@ class AppointmentsControllerTest extends TestCase
         $doctor = $this->create_doctor();
         $patient = $this->create_patient();
 
-        // Simular que el Gate permite la creación de la cita
         Gate::shouldReceive('denies')->with('create-appointment')->andReturn(false);
 
-        // Simular la validación de disponibilidad
         $this->appointmentsService->shouldReceive('createRules')
             ->once()
             ->andReturn([
@@ -70,7 +68,8 @@ class AppointmentsControllerTest extends TestCase
                 'id' => 1,
                 'doctor_id' => $doctor->id,
                 'patient_id' => $patient->id,
-                'date_time' => '2025-02-18 10:00'
+                'date_time' => '2025-02-18 10:00',
+                'status' => 'pending',
             ]));
 
         $response = $this->actingAs($patient)->postJson('/api/appointments', [
@@ -87,6 +86,7 @@ class AppointmentsControllerTest extends TestCase
                     'doctor_id' => $doctor->id,
                     'patient_id' => $patient->id,
                     'date_time' => '2025-02-18 10:00',
+                    'status' => 'pending',
                 ],
                 'message' => 'Cita creada correctamente',
             ]);
@@ -98,7 +98,6 @@ class AppointmentsControllerTest extends TestCase
 
         $this->actingAs($doctor);
 
-        // Simular que el Gate bloquea la creación de la cita
         Gate::shouldReceive('denies')->with('create-appointment')->andReturn(true);
 
         $response = $this->postJson('/api/appointments', [
@@ -117,11 +116,78 @@ class AppointmentsControllerTest extends TestCase
     public function test_doctor_can_list_appointments()
     {
         $doctor = $this->create_doctor();
+        $patient = $this->create_patient();
+        $startDate = '2025-02-18';
+        $endDate = '2025-02-28';
 
-        // Simular que el Gate permite listar citas
         Gate::shouldReceive('denies')->with('list-appointments')->andReturn(false);
 
-        // Simular la respuesta del servicio
+        $this->appointmentsService->shouldReceive('getAppointments')
+            ->once()
+            ->with($doctor, $startDate, $endDate)
+            ->andReturn([
+                Appointment::factory()->create([
+                    'id' => 1,
+                    'doctor_id' => $doctor->id,
+                    'patient_id' => $patient->id,
+                    'date_time' => '2025-02-18 10:00',
+                    'status' => 'pending',
+                ]),
+                Appointment::factory()->create([
+                    'id' => 2,
+                    'doctor_id' => $doctor->id,
+                    'patient_id' => $patient->id,
+                    'date_time' => '2025-02-20 10:00',
+                    'status' => 'pending',
+                ]),
+                Appointment::factory()->create([
+                    'id' => 3,
+                    'doctor_id' => $doctor->id,
+                    'patient_id' => $patient->id,
+                    'date_time' => '2025-02-27 10:00',
+                    'status' => 'pending',
+                ]),
+            ]);
+
+        $response = $this->actingAs($doctor)
+            ->getJson('/api/appointments?start_date=' . $startDate . '&end_date=' . $endDate);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => 'Citas listadas correctamente',
+                'data' => [
+                    [
+                        'id' => 1,
+                        'doctor_id' => $doctor->id,
+                        'patient_id' => $patient->id,
+                        'date_time' => '2025-02-18 10:00',
+                        'status' => 'pending',
+                    ],
+                    [
+                        'id' => 2,
+                        'doctor_id' => $doctor->id,
+                        'patient_id' => $patient->id,
+                        'date_time' => '2025-02-20 10:00',
+                        'status' => 'pending',
+                    ],
+                    [
+                        'id' => 3,
+                        'doctor_id' => $doctor->id,
+                        'patient_id' => $patient->id,
+                        'date_time' => '2025-02-27 10:00',
+                        'status' => 'pending',
+                    ],
+                ],
+            ]);
+    }
+
+    public function test_doctor_can_list_empty_appointments()
+    {
+        $doctor = $this->create_doctor();
+
+        Gate::shouldReceive('denies')->with('list-appointments')->andReturn(false);
+
         $this->appointmentsService->shouldReceive('getAppointments')
             ->once()
             ->with($doctor, null, null)
@@ -141,17 +207,127 @@ class AppointmentsControllerTest extends TestCase
     {
         $patient = $this->create_patient();
 
-        $this->actingAs($patient);
-
-        // Simular que el Gate bloquea la consulta
         Gate::shouldReceive('denies')->with('list-appointments')->andReturn(true);
 
-        $response = $this->getJson('/api/appointments');
+        $response = $this->actingAs($patient)->getJson('/api/appointments');
 
         $response->assertStatus(403)
             ->assertJson([
                 'success' => false,
                 'message' => 'Sólo los doctores pueden ver sus citas',
+            ]);
+    }
+
+    public function test_doctor_can_confirm_appointment()
+    {
+        $patient = $this->create_patient();
+        $doctor = $this->create_doctor();
+
+        $payment = Payment::factory()->paid()->create();
+
+        $appointment = Appointment::factory()->create([
+            'id' => 1,
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'payment_id' => $payment->id,
+            'date_time' => '2025-02-19 10:00',
+            'status' => 'pending',
+        ]);
+
+        $updatedAppointment = $appointment->fill(['status' => 'confirmed']);
+
+        Gate::shouldReceive('denies')->with('confirm-appointment')->andReturn(false);
+
+        $this->appointmentsService->shouldReceive('updateAppointment')
+            ->once()
+            ->with(Mockery::type(Appointment::class), ['status' => 'confirmed'])
+            ->andReturn($updatedAppointment);
+
+        $response = $this->actingAs($doctor)->putJson('/api/appointments/1/confirm', []);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'data' => $updatedAppointment->toArray(),
+                'message' => 'Cita confirmada correctamente',
+            ]);
+    }
+
+    public function test_doctor_cannot_confirm_appointment_because_not_paid()
+    {
+        $patient = $this->create_patient();
+        $doctor = $this->create_doctor();
+
+        $payment = Payment::factory()->failed()->create();
+
+        Appointment::factory()->create([
+            'id' => 1,
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'payment_id' => $payment->id,
+            'date_time' => '2025-02-19 10:00',
+            'status' => 'pending',
+        ]);
+
+        Gate::shouldReceive('denies')->with('confirm-appointment')->andReturn(false);
+
+        $response = $this->actingAs($doctor)->putJson('/api/appointments/1/confirm', []);
+
+        $response->assertStatus(400)
+            ->assertJson([
+                'success' => false,
+                'data' => [],
+                'message' => 'La cita no puede ser confirmada debido a que ya pasó la hora de confirmación o a la falta de pago'
+            ]);
+    }
+
+    public function test_doctor_cannot_confirm_a_past_appointment()
+    {
+        $patient = $this->create_patient();
+        $doctor = $this->create_doctor();
+
+        Appointment::factory()->create([
+            'id' => 1,
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'date_time' => '2025-02-17 10:00',
+            'status' => 'pending',
+        ]);
+
+        Gate::shouldReceive('denies')->with('confirm-appointment')->andReturn(false);
+
+        $response = $this->actingAs($doctor)->putJson('/api/appointments/1/confirm', []);
+
+        $response->assertStatus(400)
+            ->assertJson([
+                'success' => false,
+                'data' => [],
+                'message' => 'La cita no puede ser confirmada debido a que ya pasó la hora de confirmación o a la falta de pago'
+            ]);
+    }
+
+    public function test_patient_cannot_confirm_an_appointment()
+    {
+        $patient = $this->create_patient();
+        $doctor = $this->create_doctor();
+
+        Appointment::factory()->create([
+            'id' => 1,
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'date_time' => '2025-02-17 10:00',
+            'status' => 'pending',
+        ]);
+
+        Gate::shouldReceive('denies')->with('confirm-appointment')->andReturn(true);
+
+        $response = $this->actingAs($doctor)->putJson('/api/appointments/1/confirm', []);
+
+        $response->assertStatus(403)
+            ->assertJson([
+                'success' => false,
+                'data' => [],
+                'message' => 'Sólo los doctores pueden confirmar citas'
             ]);
     }
 }

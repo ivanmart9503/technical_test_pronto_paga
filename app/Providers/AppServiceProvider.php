@@ -34,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('list-appointments', function ($user) {
             return $user->role === RoleEnum::Doctor->value();
         });
+
+        // Gate to verify if a user can confirm/reject an appointment
+        Gate::define('confirm-reject-appointment', function ($user) {
+            return $user->role === RoleEnum::Doctor->value();
+        });
     }
 }

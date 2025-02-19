@@ -30,7 +30,7 @@ class AppointmentsServiceTest extends TestCase
         ]);
     }
 
-    public function create_patient( ): User
+    public function create_patient(): User
     {
         return User::factory()->create([
             'email' => 'patient@example.com',
@@ -198,5 +198,33 @@ class AppointmentsServiceTest extends TestCase
         $appointments = $this->service->getAppointments($doctor, $startDate, $endDate);
 
         $this->assertCount(0, $appointments);
+    }
+
+    /** @test */
+    public function updateAppointment_returns_the_updated_appointment()
+    {
+        $doctor = $this->create_doctor();
+        $patient = $this->create_patient();
+
+        $appointment = Appointment::factory()->create([
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'date_time' => '2025-02-19 09:00',
+            'status' => 'pending',
+        ]);
+
+        $data = [
+            'date_time' => '2025-02-19 11:00',
+        ];
+
+        $this->service->updateAppointment($appointment, $data);
+
+        $this->assertDatabaseHas('appointments', [
+            'id' => $appointment->id,
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'date_time' => '2025-02-19 11:00',
+            'status' => 'pending',
+        ]);
     }
 }

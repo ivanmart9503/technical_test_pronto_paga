@@ -88,4 +88,14 @@ class AppointmentsService
 
         return $appointment;
     }
+
+    /**
+     * Update an existing appointment.
+     */
+    public function updateAppointment(Appointment $appointment, array $data)
+    {
+        $appointment->update($data);
+
+        return $appointment;
+    }
 }
