@@ -23,9 +23,7 @@ class Appointment extends Model
         'status',
     ];
 
-    protected $casts = [
-        'date_time' => 'datetime:Y-m-d H:i',
-    ];
+    protected $casts = [];
 
     /**
      * Relationships
@@ -64,10 +62,36 @@ class Appointment extends Model
         );
     }
 
+    /**
+     * Accesors and Mutators
+     */
+    public function canCancel(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $now = Carbon::now();
+                $dateTime = Carbon::parse($this->date_time);
+
+                $validDateTime = $dateTime->isAfter($now);
+                $validPaymentStatus = $this->payment?->status !== PaymentStatusEnum::Completed->value();
+
+
+                return $validDateTime && $validPaymentStatus;
+            }
+        );
+    }
+
     public function confirmed(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->status === AppointmentStatusEnum::Confirmed->value(),
+        );
+    }
+
+    public function cancelled(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === AppointmentStatusEnum::Cancelled->value(),
         );
     }
 }

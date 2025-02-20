@@ -14,8 +14,8 @@ class UserSeeder extends Seeder
             User::factory()->doctor($i)->create();
         }
 
-        // Create 5 patients, the index will be used to generate email like patient1@test.com
-        foreach (range(1, 5) as $i) {
+        // Create 2 patients, the index will be used to generate email like patient1@test.com
+        foreach (range(1, 2) as $i) {
             User::factory()->patient($i)->create();
         }
     }

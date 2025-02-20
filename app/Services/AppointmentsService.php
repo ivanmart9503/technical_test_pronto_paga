@@ -13,8 +13,7 @@ class AppointmentsService
     {
         return [
             'doctor_id' => ['required', 'exists:users,id'],
-            'patient_id' => ['required', 'exists:users,id'],
-            'date_time' => ['required', 'date_format:Y-m-d H:i'],
+            'date_time' => ['required', 'date_format:Y-m-d H:i', 'after:now'],
         ];
     }
 

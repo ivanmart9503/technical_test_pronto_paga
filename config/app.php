@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Stripe API Keys
+    |--------------------------------------------------------------------------
+    |
+    | These keys are used by the Stripe payment gateway integration. You can
+    | get your keys from the Stripe dashboard.
+    |
+    */
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET'),
+        'publishable' => env('STRIPE_PUBLISHABLE'),
+    ],
 ];

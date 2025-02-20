@@ -36,8 +36,21 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Gate to verify if a user can confirm/reject an appointment
-        Gate::define('confirm-reject-appointment', function ($user) {
-            return $user->role === RoleEnum::Doctor->value();
+        Gate::define('confirm-cancel-appointment', function ($user, $appointment) {
+            // Check whether the user is the doctor of the appointment
+            $isDoctorOfAppointment = $appointment->doctor_id === $user->id;
+            $hasDoctorRole = $user->role === RoleEnum::Doctor->value();
+
+            return $isDoctorOfAppointment && $hasDoctorRole;
+        });
+
+        // Gate to verify if a user can generate a payment link for an appointment
+        Gate::define('pay-appointment', function ($user, $appointment) {
+            // Check whether the user is the owner of the appointment
+            $owner = $appointment->patient_id === $user->id;
+            $hasPatientRole = $user->role === RoleEnum::Patient->value();
+
+            return $owner && $hasPatientRole;
         });
     }
 }
