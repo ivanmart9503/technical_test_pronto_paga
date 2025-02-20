@@ -1,0 +1,1177 @@
+{
+	"info": {
+		"_postman_id": "ae53bcff-fdf3-4cb5-b195-2afb79d1c297",
+		"name": "Prueba técnica Iván Martínez",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11813960"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"patient1@test.com\",\n    \"password\": \"a123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/auth/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login as Doctor",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"doctor1@test.com\",\n    \"password\": \"a123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/auth/login",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:13:01 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"token\": \"1|nYf9lfLZ3xSm27AJXXb7GvKDTgnItOJED71NbdKw07ba9736\",\n        \"user\": {\n            \"id\": 1,\n            \"name\": \"Ms. Maximillia Hermann\",\n            \"email\": \"doctor1@test.com\",\n            \"email_verified_at\": null,\n            \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n            \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n            \"role\": \"doctor\"\n        }\n    },\n    \"message\": \"Usuario logueado correctamente\"\n}"
+						},
+						{
+							"name": "Login as Patient",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"patient1@test.com\",\n    \"password\": \"a123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/auth/login",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:13:17 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"token\": \"2|dDgfxlNU4daNUf3E2ut20uHn1xY6qDpnvVxZ89Jobe19adc7\",\n        \"user\": {\n            \"id\": 3,\n            \"name\": \"Rogelio Gaylord\",\n            \"email\": \"patient1@test.com\",\n            \"email_verified_at\": null,\n            \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n            \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n            \"role\": \"patient\"\n        }\n    },\n    \"message\": \"Usuario logueado correctamente\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "Create appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"doctor_id\": 1,\n    \"date_time\": \"2025-02-21 17:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/appointments",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Error while creating appointment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"doctor_id\": 1,\n    \"date_time\": \"2025-02-19 13:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/appointments",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:20:52 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": [],\n    \"message\": \"No hay disponibilidad para la cita en la fecha y hora seleccionada\"\n}"
+						},
+						{
+							"name": "Create appointment successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"doctor_id\": 1,\n    \"date_time\": \"2025-02-19 17:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/appointments",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:21:25 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"doctor_id\": 1,\n        \"date_time\": \"2025-02-19 17:00\",\n        \"patient_id\": 3,\n        \"payment_id\": 6,\n        \"updated_at\": \"2025-02-19T21:21:25.000000Z\",\n        \"created_at\": \"2025-02-19T21:21:25.000000Z\",\n        \"id\": 6\n    },\n    \"message\": \"Cita creada correctamente\"\n}"
+						},
+						{
+							"name": "Date time not available",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"doctor_id\": 1,\n    \"date_time\": \"2025-02-19 17:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/appointments",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:31:18 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": [],\n    \"message\": \"No hay disponibilidad para la cita en la fecha y hora seleccionada\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get payment link for appointment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/appointments/6/pay",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"appointments",
+								"6",
+								"pay"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Insufficient permissions to generate payment link",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/5/pay",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"5",
+										"pay"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:27:25 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": [],\n    \"message\": \"Solo los pacientes pueden generar el enlace de pago, o bien, no tienes permisos para realizar esta acción\"\n}"
+						},
+						{
+							"name": "Successfully generated payment link",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/6/pay",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"6",
+										"pay"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:28:02 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"session_id\": \"cs_test_a1IIwDYBceXWPWG1OzzXOKV3VJzewlNq2iwCqA8advNBO2nqZakNBedRoR\",\n        \"payment_url\": \"https://checkout.stripe.com/c/pay/cs_test_a1IIwDYBceXWPWG1OzzXOKV3VJzewlNq2iwCqA8advNBO2nqZakNBedRoR#fidkdWxOYHwnPyd1blpxYHZxWjA0TWR2dH9CS0lccl9IVDBPdV9WYTUwM0BEbWpkcldGRldNPTRhdzNWaz1iYFBqQzB%2FMVxsQjVRM0NiMGY9TjVraGFOTXRAc1NxaTRmVVxISnQ3c2x%2FVUdjNTUzRkJHYDV0cycpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl\"\n    },\n    \"message\": \"Enlace de pago generado correctamente\"\n}"
+						},
+						{
+							"name": "Appointment already paid",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/6/pay",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"6",
+										"pay"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:31:02 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": [],\n    \"message\": \"La cita ya está pagada\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "1|adWitSKtmRM5igzYE4jGs28TbbozQ9shWOyRgpXfb1f0f01b",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Get appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/appointments",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2025-02-19",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "2025-02-28",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Appointments for today",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/today",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"today"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:37:59 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"patient_id\": 4,\n            \"doctor_id\": 1,\n            \"payment_id\": null,\n            \"date_time\": \"2025-02-19 11:33\",\n            \"status\": \"pending\",\n            \"created_at\": \"2025-02-19T21:07:15.000000Z\",\n            \"updated_at\": \"2025-02-19T21:07:15.000000Z\",\n            \"doctor\": {\n                \"id\": 1,\n                \"name\": \"Ms. Maximillia Hermann\",\n                \"email\": \"doctor1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"doctor\"\n            },\n            \"patient\": {\n                \"id\": 4,\n                \"name\": \"Mr. Jerrold McKenzie Jr.\",\n                \"email\": \"patient2@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"patient\"\n            },\n            \"payment\": null\n        },\n        {\n            \"id\": 6,\n            \"patient_id\": 3,\n            \"doctor_id\": 1,\n            \"payment_id\": 6,\n            \"date_time\": \"2025-02-19 17:00\",\n            \"status\": \"paid\",\n            \"created_at\": \"2025-02-19T21:21:25.000000Z\",\n            \"updated_at\": \"2025-02-19T21:30:08.000000Z\",\n            \"doctor\": {\n                \"id\": 1,\n                \"name\": \"Ms. Maximillia Hermann\",\n                \"email\": \"doctor1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"doctor\"\n            },\n            \"patient\": {\n                \"id\": 3,\n                \"name\": \"Rogelio Gaylord\",\n                \"email\": \"patient1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"patient\"\n            },\n            \"payment\": {\n                \"id\": 6,\n                \"amount\": \"1500.00\",\n                \"status\": \"completed\",\n                \"payment_gateway\": \"Stripe\",\n                \"transaction_id\": \"pi_3QuKpkGNLYwZMQ5J0EQgiIzq\",\n                \"created_at\": \"2025-02-19T21:21:25.000000Z\",\n                \"updated_at\": \"2025-02-19T21:30:08.000000Z\"\n            }\n        },\n        {\n            \"id\": 7,\n            \"patient_id\": 3,\n            \"doctor_id\": 1,\n            \"payment_id\": 7,\n            \"date_time\": \"2025-02-19 16:00\",\n            \"status\": \"paid\",\n            \"created_at\": \"2025-02-19T21:31:36.000000Z\",\n            \"updated_at\": \"2025-02-19T21:32:18.000000Z\",\n            \"doctor\": {\n                \"id\": 1,\n                \"name\": \"Ms. Maximillia Hermann\",\n                \"email\": \"doctor1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"doctor\"\n            },\n            \"patient\": {\n                \"id\": 3,\n                \"name\": \"Rogelio Gaylord\",\n                \"email\": \"patient1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"patient\"\n            },\n            \"payment\": {\n                \"id\": 7,\n                \"amount\": \"1500.00\",\n                \"status\": \"completed\",\n                \"payment_gateway\": \"Stripe\",\n                \"transaction_id\": \"pi_3QuKsOGNLYwZMQ5J1B40qnQW\",\n                \"created_at\": \"2025-02-19T21:31:36.000000Z\",\n                \"updated_at\": \"2025-02-19T21:32:18.000000Z\"\n            }\n        }\n    ],\n    \"message\": \"Citas listadas correctamente\"\n}"
+						},
+						{
+							"name": "Appointments for a date range",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments?start_date=2025-02-19&end_date=2025-02-28",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2025-02-19"
+										},
+										{
+											"key": "end_date",
+											"value": "2025-02-28"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 19 Feb 2025 21:39:10 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 2,\n            \"patient_id\": 4,\n            \"doctor_id\": 1,\n            \"payment_id\": null,\n            \"date_time\": \"2025-02-19 11:33\",\n            \"status\": \"pending\",\n            \"created_at\": \"2025-02-19T21:07:15.000000Z\",\n            \"updated_at\": \"2025-02-19T21:07:15.000000Z\",\n            \"doctor\": {\n                \"id\": 1,\n                \"name\": \"Ms. Maximillia Hermann\",\n                \"email\": \"doctor1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"doctor\"\n            },\n            \"patient\": {\n                \"id\": 4,\n                \"name\": \"Mr. Jerrold McKenzie Jr.\",\n                \"email\": \"patient2@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"patient\"\n            },\n            \"payment\": null\n        },\n        {\n            \"id\": 6,\n            \"patient_id\": 3,\n            \"doctor_id\": 1,\n            \"payment_id\": 6,\n            \"date_time\": \"2025-02-19 17:00\",\n            \"status\": \"paid\",\n            \"created_at\": \"2025-02-19T21:21:25.000000Z\",\n            \"updated_at\": \"2025-02-19T21:30:08.000000Z\",\n            \"doctor\": {\n                \"id\": 1,\n                \"name\": \"Ms. Maximillia Hermann\",\n                \"email\": \"doctor1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"doctor\"\n            },\n            \"patient\": {\n                \"id\": 3,\n                \"name\": \"Rogelio Gaylord\",\n                \"email\": \"patient1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"patient\"\n            },\n            \"payment\": {\n                \"id\": 6,\n                \"amount\": \"1500.00\",\n                \"status\": \"completed\",\n                \"payment_gateway\": \"Stripe\",\n                \"transaction_id\": \"pi_3QuKpkGNLYwZMQ5J0EQgiIzq\",\n                \"created_at\": \"2025-02-19T21:21:25.000000Z\",\n                \"updated_at\": \"2025-02-19T21:30:08.000000Z\"\n            }\n        },\n        {\n            \"id\": 7,\n            \"patient_id\": 3,\n            \"doctor_id\": 1,\n            \"payment_id\": 7,\n            \"date_time\": \"2025-02-19 16:00\",\n            \"status\": \"paid\",\n            \"created_at\": \"2025-02-19T21:31:36.000000Z\",\n            \"updated_at\": \"2025-02-19T21:32:18.000000Z\",\n            \"doctor\": {\n                \"id\": 1,\n                \"name\": \"Ms. Maximillia Hermann\",\n                \"email\": \"doctor1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"doctor\"\n            },\n            \"patient\": {\n                \"id\": 3,\n                \"name\": \"Rogelio Gaylord\",\n                \"email\": \"patient1@test.com\",\n                \"email_verified_at\": null,\n                \"created_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"updated_at\": \"2025-02-19T21:07:14.000000Z\",\n                \"role\": \"patient\"\n            },\n            \"payment\": {\n                \"id\": 7,\n                \"amount\": \"1500.00\",\n                \"status\": \"completed\",\n                \"payment_gateway\": \"Stripe\",\n                \"transaction_id\": \"pi_3QuKsOGNLYwZMQ5J1B40qnQW\",\n                \"created_at\": \"2025-02-19T21:31:36.000000Z\",\n                \"updated_at\": \"2025-02-19T21:32:18.000000Z\"\n            }\n        }\n    ],\n    \"message\": \"Citas listadas correctamente\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Confirm appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/appointments/7/confirm",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"appointments",
+								"7",
+								"confirm"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Can not confirm appointment",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/7/confirm",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"7",
+										"confirm"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 20 Feb 2025 01:00:57 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": [],\n    \"message\": \"La cita no puede ser confirmada debido a que ya pasó o el paciente no ha pagado\"\n}"
+						},
+						{
+							"name": "Appointment confirmed",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/3/confirm",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"3",
+										"confirm"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 20 Feb 2025 01:13:37 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 3,\n        \"patient_id\": 5,\n        \"doctor_id\": 1,\n        \"payment_id\": 1,\n        \"date_time\": \"2025-02-20 17:11:57\",\n        \"status\": \"confirmed\",\n        \"created_at\": \"2025-02-20T01:11:04.000000Z\",\n        \"updated_at\": \"2025-02-20T01:13:37.000000Z\",\n        \"payment\": {\n            \"id\": 1,\n            \"amount\": \"96.51\",\n            \"status\": \"completed\",\n            \"payment_gateway\": \"Stripe\",\n            \"transaction_id\": \"txn_67b68128954bd\",\n            \"created_at\": \"2025-02-20T01:11:04.000000Z\",\n            \"updated_at\": \"2025-02-20T01:11:04.000000Z\"\n        }\n    },\n    \"message\": \"Cita confirmada correctamente\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/appointments/8/cancel",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"appointments",
+								"8",
+								"cancel"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Can not cancel a paid appointment",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/7/cancel",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"7",
+										"cancel"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 20 Feb 2025 00:41:53 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"data\": [],\n    \"message\": \"La cita no puede ser cancelada debido a que ya pasó o el paciente ya ha pagado\"\n}"
+						},
+						{
+							"name": "Appointment cancelled",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/appointments/8/cancel",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"appointments",
+										"8",
+										"cancel"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.25.4"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.27"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 20 Feb 2025 00:56:00 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 8,\n        \"patient_id\": 3,\n        \"doctor_id\": 1,\n        \"payment_id\": 8,\n        \"date_time\": \"2025-02-20 16:00\",\n        \"status\": \"cancelled\",\n        \"created_at\": \"2025-02-20T00:55:44.000000Z\",\n        \"updated_at\": \"2025-02-20T00:56:00.000000Z\",\n        \"payment\": {\n            \"id\": 8,\n            \"amount\": \"1500.00\",\n            \"status\": \"pending\",\n            \"payment_gateway\": null,\n            \"transaction_id\": null,\n            \"created_at\": \"2025-02-20T00:55:44.000000Z\",\n            \"updated_at\": \"2025-02-20T00:55:44.000000Z\"\n        }\n    },\n    \"message\": \"Cita cancelada correctamente\"\n}"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "1|Hbq6ODkEdowwcBTEHn2VkiL82LtwOG9PzIyUxne961dd3702",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "http://technical-test-ivan.test/api",
+			"type": "string"
+		}
+	]
+}
