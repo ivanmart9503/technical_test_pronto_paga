@@ -14,13 +14,22 @@
 composer install
 ```
 
-2. Configurar la base de datos:
+2. Configurar el archivo `.env`:
+
+Crear un archivo `.env` en la raíz del proyecto y copiar el contenido del archivo `.env.example` y modificar el valor de la key `APP_URL` con la url del proyecto, en mi caso fue `http://technical-test-ivan.test`, pero todo depende del servidor web que se use.
+
+Después se debe ejecutar el siguiente comando para generar una key de encriptación:
+```
+php artisan key:generate
+```
+
+3. Configurar la base de datos:
 
 > IMPORTANTE: Se debe crear una base de datos en MySQL con el nombre `technical_test`, de preferencia usar el usuario root y sin contraseña para poder correr las migraciones.
 
 Si se utiliza otro nombre para la base de datos, o se usa otro usuario y contraseña, se debe especificar en el archivo `.env` en las keys `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD` respectivamente
 
-3. Ejecutar las migraciones:
+4. Ejecutar las migraciones:
 ```
 php artisan migrate:fresh --seed
 ```
